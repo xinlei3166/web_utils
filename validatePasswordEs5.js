@@ -1,5 +1,5 @@
 // 正则匹配
-var reg = new RegExp("(?=.*[a-z]|[A-Z])(?=.*[0-9])(?=.*[!\"#$%&'()*+,./:;<=>?@^_`{|}~])[A-Za-z0-9!\"#$%&'()*+,./:;<=>?@^_`{|}~]{8,16}");
+var reg = new RegExp("^(?=.*[a-z]|[A-Z])(?=.*[0-9])(?=.*[!\"#$%&'()*+,./:;<=>?@^_`{|}~])[A-Za-z0-9!\"#$%&'()*+,./:;<=>?@^_`{|}~]{8,16}$");
 function match(str) {
     return reg.test(str)
 }
@@ -115,7 +115,7 @@ function validatePassword(str, username) {
 
 /*
 Example:
-    validatePassword('qwer!@ab', 'abc')
+    validatePassword('qwdr!@ab1357902v', 'abc')
     结果为true表示验证通过。
 */
 
