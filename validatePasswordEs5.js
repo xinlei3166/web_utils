@@ -81,6 +81,11 @@ function validateLogicAdjoin(str) {
             return false
         }
     }
+    for (var i=0; i < findIndexArr.length-2; i++) {
+        if (findIndexArr[i + 1] === findIndexArr[i] && findIndexArr[i + 2] === findIndexArr[i + 1]) {
+            return false
+        }
+    }
     return true
 }
 
@@ -110,7 +115,8 @@ function validateIsContainsUsername(str, username) {
 
 // 使用此函数验证密码
 function validatePassword(str, username) {
-    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str) && validateIsContainsUsername(str, username)
+    // return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str) && validateIsContainsUsername(str, username)
+    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateIsContainsUsername(str, username)
 }
 
 /*
