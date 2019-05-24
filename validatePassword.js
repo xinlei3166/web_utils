@@ -86,12 +86,29 @@ function formatValue(val) {
     return String(val).toLowerCase()
 }
 
-function validateRepetition(str){
+function validateRepetition(str, continuity=false){
     const strArr = str.split('');
-
-    for (let i=0; i < strArr.length-2; i++) {
-        if (formatValue(strArr[i + 1]) === formatValue(strArr[i]) && formatValue(strArr[i + 2]) === formatValue(strArr[i + 1])) {
-            return false
+    if (continuity) {
+        for (let i=0; i < strArr.length-2; i++) {
+            if (formatValue(strArr[i + 1]) === formatValue(strArr[i]) && formatValue(strArr[i + 2]) === formatValue(strArr[i + 1])) {
+                return false
+            }
+        }
+    } else {
+        let m = new Map();
+        for (let item of strArr) {
+            if (m.has(item)) {
+                let count = m.get(item);
+                count += 1;
+                m.set(item, count)
+            } else {
+                m.set(item, 1)
+            }
+        }
+        for (let value of m.values()) {
+            if (value >= 3) {
+                return false
+            }
         }
     }
     return true
@@ -104,7 +121,8 @@ function validateIsContainsUsername(str, username) {
 
 // 使用此函数验证密码
 function validatePassword(str, username) {
-    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str) && validateIsContainsUsername(str, username)
+    let continuity;
+    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str, false) && validateIsContainsUsername(str, username)
 }
 
 /*

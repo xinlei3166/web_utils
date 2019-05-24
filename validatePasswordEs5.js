@@ -88,11 +88,28 @@ function formatValue(val) {
     return String(val).toLowerCase()
 }
 
-function validateRepetition(str){
+function validateRepetition(str, continuity){
     var strArr = str.split('');
-    for (var i=0; i < strArr.length-2; i++) {
-        if (formatValue(strArr[i + 1]) === formatValue(strArr[i]) && formatValue(strArr[i + 2]) === formatValue(strArr[i + 1])) {
-            return false
+    if (continuity) {
+        for (var i=0; i < strArr.length-2; i++) {
+            if (formatValue(strArr[i + 1]) === formatValue(strArr[i]) && formatValue(strArr[i + 2]) === formatValue(strArr[i + 1])) {
+                return false
+            }
+        }
+    } else {
+        var m = {};
+        for (var index=0; index<strArr.length; index++) {
+            var key = String(strArr[index]);
+            if (m[key]) {
+                m[key] = m[key] + 1;
+            } else {
+                m[key] = 1
+            }
+        }
+        for (var k in m) {
+            if (m[k] >= 3) {
+                return false
+            }
         }
     }
     return true
@@ -105,7 +122,7 @@ function validateIsContainsUsername(str, username) {
 
 // 使用此函数验证密码
 function validatePassword(str, username) {
-    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str) && validateIsContainsUsername(str, username)
+    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str, false) && validateIsContainsUsername(str, username)
 }
 
 /*
@@ -113,4 +130,4 @@ Example:
     validatePassword('qwdr!@ab1357902v', 'abc')
     结果为true表示验证通过。
 */
-
+// console.log(validatePassword('qq5@5788502Q.', 'abc'))
