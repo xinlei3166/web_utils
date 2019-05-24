@@ -1,5 +1,5 @@
-// 正则匹配qwdr!@ab1357902v
-const reg = new RegExp("^(?=.*[a-z]|[A-Z])(?=.*[0-9])(?=.*[!\"#$%&'()*+,./:;<=>?@^_`{|}~])[A-Za-z0-9!\"#$%&'()*+,./:;<=>?@^_`{|}~]{8,16}$");
+// 正则匹配
+const reg = new RegExp("^(?=.*[a-z]|[A-Z])(?=.*[0-9])(?=.*[!\"#$%&'()*+,./:;<=>?\\\\@[\\]^\\-_`{|}~])[A-Za-z0-9!\"#$%&'()*+,./:;<=>?\\\\@[\\]^\\-_`{|}~]{8,16}$");
 function match(str) {
     return reg.test(str)
 }
@@ -79,28 +79,18 @@ function validateLogicAdjoin(str) {
             return false
         }
     }
-    for (let i=0; i < findIndexArr.length-2; i++) {
-        if (findIndexArr[i + 1] === findIndexArr[i] && findIndexArr[i + 2] === findIndexArr[i + 1]) {
-            return false
-        }
-    }
     return true
+}
+
+function formatValue(val) {
+    return String(val).toLowerCase()
 }
 
 function validateRepetition(str){
     const strArr = str.split('');
-    let m = new Map();
-    for (let item of strArr) {
-        if (m.has(item)) {
-            let count = m.get(item);
-            count += 1;
-            m.set(item, count)
-        } else {
-            m.set(item, 1)
-        }
-    }
-    for (let value of m.values()) {
-        if (value >= 3) {
+
+    for (let i=0; i < strArr.length-2; i++) {
+        if (formatValue(strArr[i + 1]) === formatValue(strArr[i]) && formatValue(strArr[i + 2]) === formatValue(strArr[i + 1])) {
             return false
         }
     }
@@ -114,8 +104,7 @@ function validateIsContainsUsername(str, username) {
 
 // 使用此函数验证密码
 function validatePassword(str, username) {
-    // return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str) && validateIsContainsUsername(str, username)
-    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateIsContainsUsername(str, username)
+    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str) && validateIsContainsUsername(str, username)
 }
 
 /*
@@ -123,4 +112,5 @@ Example:
     validatePassword('qwdr!@ab1357902v', 'abc')
     结果为true表示验证通过。
 */
-// console.log(validatePassword('qq535788502Q.', 'null'));
+// console.log(validatePassword('qq5@5788502Q.', 'null'));
+// console.log(validatePassword('CTS\\I[128]""', 'null'));

@@ -1,5 +1,5 @@
 // 正则匹配
-var reg = new RegExp("^(?=.*[a-z]|[A-Z])(?=.*[0-9])(?=.*[!\"#$%&'()*+,./:;<=>?@^_`{|}~])[A-Za-z0-9!\"#$%&'()*+,./:;<=>?@^_`{|}~]{8,16}$");
+var reg = new RegExp("^(?=.*[a-z]|[A-Z])(?=.*[0-9])(?=.*[!\"#$%&'()*+,./:;<=>?\\\\@[\\]^\\-_`{|}~])[A-Za-z0-9!\"#$%&'()*+,./:;<=>?\\\\@[\\]^\\-_`{|}~]{8,16}$");
 function match(str) {
     return reg.test(str)
 }
@@ -81,27 +81,17 @@ function validateLogicAdjoin(str) {
             return false
         }
     }
-    for (var i=0; i < findIndexArr.length-2; i++) {
-        if (findIndexArr[i + 1] === findIndexArr[i] && findIndexArr[i + 2] === findIndexArr[i + 1]) {
-            return false
-        }
-    }
     return true
+}
+
+function formatValue(val) {
+    return String(val).toLowerCase()
 }
 
 function validateRepetition(str){
     var strArr = str.split('');
-    var m = {};
-    for (var index=0; index<strArr.length; index++) {
-        var key = String(strArr[index]);
-        if (m[key]) {
-            m[key] = m[key] + 1;
-        } else {
-            m[key] = 1
-        }
-    }
-    for (var k in m) {
-        if (m[k] >= 3) {
+    for (var i=0; i < strArr.length-2; i++) {
+        if (formatValue(strArr[i + 1]) === formatValue(strArr[i]) && formatValue(strArr[i + 2]) === formatValue(strArr[i + 1])) {
             return false
         }
     }
@@ -115,8 +105,7 @@ function validateIsContainsUsername(str, username) {
 
 // 使用此函数验证密码
 function validatePassword(str, username) {
-    // return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str) && validateIsContainsUsername(str, username)
-    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateIsContainsUsername(str, username)
+    return match(str) && validateKey(str) && validateLogicAdjoin(str) && validateRepetition(str) && validateIsContainsUsername(str, username)
 }
 
 /*
