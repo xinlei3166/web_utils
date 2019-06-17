@@ -70,7 +70,7 @@ axios.interceptors.response.use(response => {
     return Promise.reject(error)
 });
 
-function request(config={}) {
+function _request(config={}) {
     return new Promise((resolve, reject) => {
         axios.request(config)
             .then(response => {
@@ -82,59 +82,47 @@ function request(config={}) {
     })
 }
 
+async function request(config={}) {
+    try {
+        return await _request(config)
+    } catch (e) {
+        //
+    }
+}
+
 async function get(url, params={}, config={}) {
     config['method'] = 'get';
     config['url'] = url;
     config['params'] = params;
-    try {
-        return await request(config)
-    } catch (e) {
-
-    }
+    return await request(config)
 }
 
-async function post(url, data, config={}) {
+async function post(url, data={}, config={}) {
     config['method'] = 'post';
     config['url'] = url;
     config['data'] = data;
-    try {
-        return await request(config)
-    } catch (e) {
-
-    }
+    return await request(config)
 }
 
-async function put(url, data, config={}) {
+async function put(url, data={}, config={}) {
     config['method'] = 'put';
     config['url'] = url;
     config['data'] = data;
-    try {
-        return await request(config)
-    } catch (e) {
-
-    }
+    return await request(config)
 }
 
-async function patch(url, data, config={}) {
+async function patch(url, data={}, config={}) {
     config['method'] = 'patch';
     config['url'] = url;
     config['data'] = data;
-    try {
-        return await request(config)
-    } catch (e) {
-
-    }
+    return await request(config)
 }
 
-async function _delete(url, data, config={}) {
+async function _delete(url, data={}, config={}) {
     config['method'] = 'delete';
     config['url'] = url;
     config['data'] = data;
-    try {
-        return await request(config)
-    } catch (e) {
-
-    }
+    return await request(config)
 }
 
 export default {
