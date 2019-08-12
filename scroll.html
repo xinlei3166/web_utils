@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .content {
+            height: 2000px;
+            background: pink;
+            overflow-y: auto;
+        }
+
+        #btn {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div class="content"><button id="btn">Throttle</button></div>
+    </div>
+    <script src="debounce.js"></script>
+    <script>
+        var btn = document.querySelector('#btn')
+        btn.onclick = debounce(show, 500)
+
+        function show() {
+            console.log(new Date())
+        }
+    </script>
+</body>
+</html>

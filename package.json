@@ -1,0 +1,25 @@
+{
+  "name": "web-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "junxi",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "element-ui": "^2.11.1",
+    "prettier": "^1.18.2",
+    "vue": "^2.6.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xinlei3166/web_utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xinlei3166/web_utils/issues"
+  },
+  "homepage": "https://github.com/xinlei3166/web_utils#readme"
+}

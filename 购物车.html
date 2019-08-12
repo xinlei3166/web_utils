@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <style>
+        #wrap {
+            margin: 100px 100px;
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+            margin: 0;
+        }
+
+        .clear {
+            content: "";
+            display: block;
+            clear: both;
+        }
+
+        .items .item {
+            border: 1px solid darkcyan;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .items .item-price {
+            color: red;
+        }
+
+        .item-text {
+            vertical-align: middle;
+        }
+
+        .cart-wrap {
+            margin-top: 50px;
+            width: 100%;
+            border: 1px dashed gray;
+        }
+
+        .cart {
+            flex-direction: column;
+            min-height: 174px;
+        }
+
+        .cart-item {
+            width: 100%;
+            margin: 6px 0;
+        }
+
+        .cart-item .left, .right{
+            float: left;
+            width: 50%;
+        }
+
+        .cart-item .item-quantity {
+            float: left;
+            margin-left: 300px;
+        }
+
+        .cart-item .item-total-price {
+            float: right;
+            text-align: left;
+        }
+
+        .total {
+            float: right;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <div class="items-wrap">
+        <ul class="items">
+            <li class="item" data-id="1" data-price="199.00" data-text="JavaScript 高级程序设计">
+                <img class="item-img" src="img/1.jpg" alt="">
+                <div class="item-price">￥199.00</div>
+                <div class="item-text">JavaScript 高级程序设计</div>
+            </li>
+            <li class="item" data-id="2" data-price="99.00" data-text="Node.js 开发实战">
+                <img src="img/2.jpg" alt="">
+                <div class="item-price">￥99.00</div>
+                <div class="item-text">Node.js 开发实战</div>
+            </li>
+            <li class="item" data-id="3" data-price="122.00" data-text="Three.js 开发指南">
+                <img src="img/3.jpg" alt="">
+                <div class="item-price">￥122.00</div>
+                <div class="item-text">Three.js 开发指南</div>
+            </li>
+            <li class="item" data-id="4" data-price="98.00" data-text="深入浅出 Vue.js">
+                <img src="img/4.jpg" alt="">
+                <div class="item-price">￥98.00</div>
+                <div class="item-text">深入浅出 Vue.js</div>
+            </li>
+            <li class="item" data-id="5" data-price="59.00" data-text="前端工程化 体系设计与实践">
+                <img src="img/5.jpg" alt="">
+                <div class="item-price">￥59.00</div>
+                <div class="item-text">前端工程化 体系设计与实践</div>
+            </li>
+        </ul>
+    </div>
+    <div class="cart-wrap">
+        <ul class="cart">
+        </ul>
+    </div>
+    <div class="total">
+        <span>总价：</span>
+        <span class="total-money">￥0.00</span>
+    </div>
+</div>
+</body>
+<script>
+    var items = document.querySelector('.items').querySelectorAll('.item');
+    var cart = document.querySelector('.cart');
+    var totalMoneyItem = document.querySelector('.total').querySelectorAll('span')[1];
+    for (let i of items) {
+        i.addEventListener('dragstart', function (event) {
+            var e = event || window.event;
+            // console.log('开始拖拽');
+            e.dataTransfer.setData('productId', i.dataset.id);
+            e.dataTransfer.setData('productPrice', i.dataset.price);
+            e.dataTransfer.setData('productText', i.dataset.text);
+        })
+    }
+    cart.ondragenter = function(){
+        // console.log('进入目标元素')
+    };
+    cart.ondragover = function(event){
+        var event = event || window.event;
+        // console.log('在目标元素中拖拽');
+        event.preventDefault()
+    };
+    cart.ondragleave = function(){
+        // console.log('拖放离开目标元素')
+    };
+    cart.ondrop = function(event) {
+        // console.log('拖放');
+        var e = event || window.event;
+        var productId = e.dataTransfer.getData('productId');
+        var productPrice = e.dataTransfer.getData('productPrice');
+        var productText = e.dataTransfer.getData('productText');
+        addToCart(productId, productPrice, productText)
+    };
+    function addToCart(productId, productPrice, productText) {
+        const cartItem = document.querySelector(`.cart-item[data-id="${productId}"]`);
+        if (cartItem) {
+            const quantityItem = cartItem.querySelector('.item-quantity').querySelectorAll('span')[1];
+            const totalPriceItem = cartItem.querySelector('.item-total-price').querySelectorAll('span')[1];
+            const quantity = parseInt(quantityItem.innerHTML) + 1;
+            quantityItem.innerHTML = quantity;
+            totalPriceItem.innerHTML = (quantity * parseFloat(productPrice)).toFixed(2);
+        } else {
+            const newCartItem = `
+             <li class="cart-item clear" data-id="${productId}">
+                <div class="left">
+                    <div class="item-text">
+                        <span>${productText}</span>
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="item-quantity">
+                        <span>x</span>
+                        <span>1</span>
+                    </div>
+                    <div class="item-total-price">
+                        <span>￥</span>
+                        <span>${productPrice}</span>
+                    </div>
+                </div>
+            </li>
+            `;
+            cart.innerHTML += newCartItem;
+        }
+        let totalMoney = 0;
+        const cartItems = cart.querySelectorAll('.item-total-price');
+        for (let i of cartItems) {
+            const money = i.querySelectorAll('span')[1].innerHTML;
+            totalMoney += parseFloat(money);
+        }
+        totalMoneyItem.innerHTML = '¥ ' + totalMoney.toFixed(2);
+    }
+</script>
+</html>

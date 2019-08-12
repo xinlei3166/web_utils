@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>钟表</title>
+    <style id="css">
+        #wrap {
+            width: 200px;
+            height: 200px;
+            border: 2px solid black;
+            margin: 100px auto;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        #wrap ul {
+            margin: 0;
+            padding: 0;
+            height: 200px;
+            position: relative;
+            list-style: none;
+        }
+
+        #wrap ul li {
+            width: 2px;
+            height: 6px;
+            background: #000;
+            position: absolute;
+            left: 99px;
+            top: 0;
+            transform-origin: center 100px;
+        }
+
+        #wrap ul li:nth-of-type(5n+1) {
+            height: 12px;
+        }
+
+        #hour {
+            width: 6px;
+            height: 45px;
+            background: #000;
+            position: absolute;
+            left: 97px;
+            top: 55px;
+            transform-origin: bottom;
+        }
+
+        #min {
+            width: 4px;
+            height: 65px;
+            background: #999;
+            position: absolute;
+            left: 98px;
+            top: 35px;
+            transform-origin: bottom;
+        }
+
+        #sec {
+            width: 2px;
+            height: 80px;
+            background: #ff0000;
+            position: absolute;
+            left: 99px;
+            top: 20px;
+            transform-origin: bottom;
+        }
+
+        .ico {
+            width: 20px;
+            height: 20px;
+            background: #000;
+            border-radius: 50%;
+            position: absolute;
+            left: 90px;
+            top: 90px;
+        }
+    </style>
+</head>
+<body>
+<div id="wrap">
+    <ul id="list">
+    </ul>
+    <div id="hour"></div>
+    <div id="min"></div>
+    <div id="sec"></div>
+    <div class="ico"></div>
+</div>
+<script>
+    var list = document.getElementById('list');
+    var css = document.getElementById('css');
+    var h = document.getElementById('hour');
+    var m = document.getElementById('min');
+    var s = document.getElementById('sec');
+    var aLi = "";
+    var sCss = "";
+
+    for (var i=0; i<60; i++) {
+        sCss += `
+        #wrap ul li:nth-of-type(${i+1}) {
+            transform: rotate(${i*6}deg);
+        }
+        `;
+        aLi += "<li></li>"
+    }
+    list.innerHTML = aLi;
+    css.innerHTML += sCss;
+
+    toTime();
+    function toTime() {
+        var date = new Date();
+        var sec = date.getSeconds();
+        var min = date.getMinutes()+sec/60;
+        var hour = date.getHours()+min/60;
+        s.style.transform = "rotate("+sec*6+"deg)";
+        m.style.transform = "rotate("+min*6+"deg)";
+        h.style.transform = `rotate(${hour*30}deg)`;
+    }
+
+    setInterval(toTime, 1000)
+</script>
+</body>
+</html>
