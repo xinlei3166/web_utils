@@ -1,5 +1,13 @@
 import { Loading } from 'element-ui'
 
+/*.icon-loading {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  background: url('./assets/images/other/icon-loading.gif') no-repeat;
+  background-size: 100% 100%;
+}*/
+
 let loading
 function startLoading() {
   loading = Loading.service({
