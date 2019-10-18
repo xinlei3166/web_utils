@@ -1,4 +1,4 @@
-import { dynamicTableHeight } from '@/utils/table'
+import { dynamicTableHeight } from '../table'
 
 const TableMixin = {
   data() {
