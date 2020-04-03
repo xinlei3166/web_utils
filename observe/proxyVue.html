@@ -77,8 +77,8 @@ content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=
                 }
                 if (node.hasAttribute("v-click")) {
                     let methodName = node.getAttribute("v-click");
-                    let mothod = this.$methods[methodName].bind(data);
-                    node.addEventListener("click", mothod);
+                    let method = this.$methods[methodName].bind(data);
+                    node.addEventListener("click", method);
                 }
             });
         }

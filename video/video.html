@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>video</title>
+</head>
+<body>
+  <video class="video" src="./1552306741894196.mp4" controls></video>
+  <script>
+    let timer
+    function play() {
+      let video = document.querySelector('.video')
+      if (video.paused) { //判读是否播放
+        video.paused = false;
+        video.play(); //没有就播放
+      }
+    }
+    timer = setInterval(play,1)
+  </script>
+</body>
+</html>
