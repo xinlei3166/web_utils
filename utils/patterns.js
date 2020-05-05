@@ -7,4 +7,9 @@ const phonePattern = /^1[3,4,5,6,7,8,9]\d(\*{4}|\d{4})\d{4}/
 // 从字符串截取岁数
 const pattern = /\d+(-\d+)?/g
 const str = '【5-7岁】儿童艺术基础系列 【8-10岁】儿童艺术基础系列 【12岁以上】高中系列 【12-13】高中系列'
-console.log(str.match(pattern))
+// console.log(str.match(pattern))
+
+// 判断2位小数
+const pricePattern = /^\d+\.?\d{0,2}$/
+const price = '0.00'
+console.log(price.match(pricePattern))
