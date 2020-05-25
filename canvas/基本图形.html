@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>基本图形</title>
+  <style>
+    .wrap {
+      margin: 100px auto;
+      width: 400px;
+    }
+
+    #c {
+      background: #fff;
+      border: 1px solid #1989FA;
+    }
+
+    span {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <!--默认：宽300，高150-->
+  <canvas id="c" width="400" height="400">
+    <span>不支持canvas的浏览器</span>
+  </canvas>
+</div>
+  <script>
+    window.onload = function () {
+      var c = document.querySelector('#c')
+      var ctx = c.getContext('2d')
+      // 矩形 fill填充 stroke描边
+      ctx.strokeRect(200, 200, 100, 100)
+      ctx.fillStyle = "#18560"
+      ctx.fillRect(10, 280, 100, 100)
+      // 圆形
+      ctx.beginPath()
+      ctx.arc(260,50,40,0,2*Math.PI)
+      // ctx.strokeStyle = "red"
+      // ctx.lineWidth = 4
+      ctx.stroke()
+      // 文本
+      ctx.font = "20px Arial"
+      ctx.fillStyle = "#000"
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+      ctx.fillText("文本",260,50)
+      ctx.strokeText("文本",260,150)
+      // 线性渐变
+      var grd=ctx.createLinearGradient(0,0,200,0)
+      grd.addColorStop(0,"red")
+      grd.addColorStop(1,"white")
+      ctx.fillStyle=grd
+      ctx.fillRect(10,190,150,80)
+      // 径向/圆渐变
+      var grd=ctx.createRadialGradient(75,50,5,90,60,100)
+      grd.addColorStop(0,"red")
+      grd.addColorStop(1,"white")
+      ctx.fillStyle=grd
+      ctx.fillRect(10,10,150,80)
+      // 绘制图片
+      var img = new Image()
+      img.src = './img/1.jpg'
+      img.width = 50
+      img.onload = function () {
+        ctx.drawImage(img,200,200, 100, 100)
+      }
+    }
+  </script>
+</body>
+</html>

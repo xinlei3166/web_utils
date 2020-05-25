@@ -48,3 +48,45 @@ const timeDifferenceToHourAndMinute = (start, end) => {
     }
     return { hour: hour, minute: minute }
 }
+
+// 获取一个月有多少天
+export const getCountDays = (date) => {
+    const curDate = date || new Date()
+    const curMonth = curDate.getMonth()
+    curDate.setMonth(curMonth + 1)
+    curDate.setDate(0)
+    return curDate.getDate()
+}
+
+// 获取一个月内的所有日期
+export const getMonthDays = () => {
+    let dates = []
+    const date = new Date()
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const count = this.getCountDays(date)
+    for (let i = day; i <= count; i++) {
+        const ymd = `${year}-${suppleZero(month)}-${suppleZero(i)}`
+        dates.push(ymd)
+    }
+    return dates
+}
+
+// 获取两个日期间的所有日期
+export const getTwoDateDays = (start, end) => {
+    let dates = []
+    const _start = start.replace(/-/g, '/')
+    const _end = end.replace(/-/g, '/')
+    let startTime = new Date(_start)
+    let endTime = new Date(_end)
+    while ((endTime.getTime() - startTime.getTime()) >= 0) {
+        let year = startTime.getFullYear()
+        let month = startTime.getMonth() + 1
+        let day = startTime.getDate()
+        const ymd = `${year}-${suppleZero(month)}-${suppleZero(day)}`
+        dates.push(ymd)
+        startTime.setDate(startTime.getDate() + 1)
+    }
+    return dates
+}
