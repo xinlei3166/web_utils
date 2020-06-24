@@ -3,19 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>video</title>
+  <link rel="stylesheet" type="text/css" href="../css/reset.css">
+  <link rel="stylesheet" type="text/css" href="icon/iconfont.css">
+  <link rel="stylesheet" type="text/css" href="video.css">
 </head>
 <body>
-  <video class="video" src="./1552306741894196.mp4" controls></video>
-  <script>
-    let timer
-    function play() {
-      let video = document.querySelector('.video')
-      if (video.paused) { //判读是否播放
-        video.paused = false;
-        video.play(); //没有就播放
+<div id="app">
+  <div class="video-header">
+    <span class="title" v-text="title"></span>
+  </div>
+  <div class="video-main">
+<!--    <video :src="video" id="video" ref="video" width="100%" height="100%"></video>-->
+    <div class="process"></div>
+    <div class="control">
+      <div class="left">
+        <i class="iconfont icon-play-circle control-btn"></i>
+        <i class="iconfont icon-timeout control-btn"></i>
+        <i class="iconfont icon-backward control-btn"></i>
+        <i class="iconfont icon-forward control-btn"></i>
+      </div>
+      <div class="right">
+        <span class="text-btn">倍速</span>
+        <i class="iconfont icon-yinliang control-btn"></i>
+        <i class="iconfont icon-fullscreen control-btn"></i>
+        <i class="iconfont icon-fullscreen-exit control-btn"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+<script src="video.js"></script>
+<script>
+  window.onload = function () {
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        video: 'http://media-playback.jingyuxiaoban.com/caae5dd8a5ca20df3a55081a2dd491dc.mp4',
+        title: '标题',
+      },
+      mounted() {
+        const v = new Vue({
+          container: '.video-main'
+        })
+        v.init()
+        v.setSrc(this.video)
       }
-    }
-    timer = setInterval(play,1)
-  </script>
+    })
+  }
+</script>
 </body>
 </html>
