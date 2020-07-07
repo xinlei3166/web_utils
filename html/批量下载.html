@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<button id="download-btn">批量下载</button>
+<div id="con">
+
+</div>
+<script>
+  var btn = document.getElementById('download-btn')
+
+  //将要进行多文件下载的mp3文件地址，以组数的形式存起来（这里只例了3个地址）
+  var arr = ["https://image-m.jingyuxiaoban.com/1593759473/618963F4-2EF9-4196-9907-69E38CBB4414.png?q-sign-algorithm=sha1&q-ak=AKIDweKsELKxw0witRcv86qJb5JH0Tkqs1mL&q-sign-time=1594092510;1594096110&q-key-time=1594092510;1594096110&q-header-list=&q-url-param-list=&q-signature=06755f7ef54a7f1a574eb1f8d49ef5106765ad07&response-content-type=application/octet-stream", "https://image-m.jingyuxiaoban.com/1593759480/672EF41B-0B25-4E3E-95BF-6D85E75F14BD.png?q-sign-algorithm=sha1&q-ak=AKIDweKsELKxw0witRcv86qJb5JH0Tkqs1mL&q-sign-time=1594092510;1594096110&q-key-time=1594092510;1594096110&q-header-list=&q-url-param-list=&q-signature=e0b2d9a727b9a72a47f974e0e298d4a2c62ce656&response-content-type=application/octet-stream"];
+  var div = document.getElementById("con")
+
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+  async function download(name, href) {
+    var a = document.createElement("a") //创建a标签
+    a.href = href //设置下载地址
+    a.download = name //设置下载文件名
+    // a.style.display = 'none'
+    // document.body.append(div)
+    a.click()
+
+    await delay(100)
+    a.remove()
+  }
+
+  //给多文件下载按钮添加点击事件
+  btn.onclick = async () => {
+    for (const [index, url] of arr.entries()) {
+      await delay(index * 500)
+      await download(index, url)
+    }
+  }
+</script>
+</body>
+</html>
