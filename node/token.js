@@ -21,7 +21,7 @@ class JWT {
   constructor() {
     this._alg = 'HS256'
     this._typ = 'JWT'
-    this._iss = 'Rouchi Fed'
+    this._iss = 'XianLing'
     this.accessExpiresIn = 3600 * 24
     this.refreshExpiresIn = 3600 * 24 * 30
   }

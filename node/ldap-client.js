@@ -79,5 +79,5 @@ async function login(email, password) {
   return user
 }
 
-// login('xxxxxx@rouchi.com', 'xxxxxx')
+// login('xxxxxx@xxxxxx.com', 'xxxxxx')
 module.exports = login
